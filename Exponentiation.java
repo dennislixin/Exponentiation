@@ -17,18 +17,24 @@ public class Exponentiation
 
     test(5, 6);
     test(7, 8);
-    test(10, 11);
+    test(10, 9);
 
   }
 
   public static void test(int base, int exponent)
   {
     int expected = powerLinear(base, exponent);
-    int result = powerLogarithmic(base, exponent);
 
-    if(result != expected)
+    int result1 = powerLogarithmic(base, exponent);
+    if(result1 != expected)
     {
-      System.out.println(base + "^" + exponent + ": expected = " + expected + ", result = " + result);
+      System.out.println(base + "^" + exponent + ": expected = " + expected + ", result (logarithmic algorithm) = " + result1);
+    }
+
+    int result2 = powerConstant(base, exponent);
+    if(result2 != expected)
+    {
+      System.out.println(base + "^" + exponent + ": expected = " + expected + ", result (constant algorithm) = " + result2);
     }
   }
 
@@ -50,5 +56,10 @@ public class Exponentiation
     if((exponent & 1) == 1)
       power = power * base;
     return power;
+  }
+
+  public static int powerConstant(int base, int exponent)
+  {
+    return (int)Math.round(Math.exp(Math.log(base) * exponent));
   }
 }
